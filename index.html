@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        #qrcode {
+            width: 160px;
+            height: 160px;
+            margin: auto;
+        }
+        input[type="text"], input[type="email"] {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="email" id="email" placeholder="Enter your email">
+        <button onclick="generateQRCode()">Generate QR Code</button>
+        <div id="qrcode"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <script>
+        function generateQRCode() {
+            const qrCodeContainer = document.getElementById('qrcode');
+            qrCodeContainer.innerHTML = ""; // Clear any existing QR code
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            if (name.trim() === "" || email.trim() === "") {
+                alert("Please enter both your name and email!");
+                return;
+            }
+
+            // Generate a random number
+            const randomNumber = Math.floor(1000 + Math.random() * 9000);
+
+            // Prepare the data for the QR code
+            const qrData = `Name: ${name}, Random Number: ${randomNumber}`;
+
+            // Create the QR code
+            new QRCode(qrCodeContainer, {
+                text: qrData,
+                width: 160,
+                height: 160,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    </script>
+</body>
+</html>
